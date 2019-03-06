@@ -1,0 +1,28 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<table class="tx-eventcalendar" >
+	<tr>
+		<td>
+			<f:translate key="tx_eventcalendar_domain_model_event.title" />
+		</td>
+		<td>
+		{event.title}
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<f:translate key="tx_eventcalendar_domain_model_event.date_time_start" />
+		</td>
+		<td>
+		{event.dateTimeStart -> f:format.date()}
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<f:translate key="tx_eventcalendar_domain_model_event.date_time_end" />
+		</td>
+		<td>
+		{event.dateTimeEnd -> f:format.date()}
+		</td>
+	</tr>
+</table>
+</html>
