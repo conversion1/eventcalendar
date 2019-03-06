@@ -1,0 +1,16 @@
+mod {
+    wizards.newContentElement.wizardItems.plugins {
+        elements {
+            calendar {
+                iconIdentifier = eventcalendar-plugin-calendar
+                title = LLL:EXT:eventcalendar/Resources/Private/Language/locallang_db.xlf:tx_eventcalendar_calendar.name
+                description = LLL:EXT:eventcalendar/Resources/Private/Language/locallang_db.xlf:tx_eventcalendar_calendar.description
+                tt_content_defValues {
+                    CType = list
+                    list_type = eventcalendar_calendar
+                }
+            }
+        }
+        show = *
+    }
+}

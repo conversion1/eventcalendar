@@ -17,32 +17,14 @@ call_user_func(
             ]
         );
 
-    // wizards
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
-        'mod {
-            wizards.newContentElement.wizardItems.plugins {
-                elements {
-                    calendar {
-                        iconIdentifier = eventcalendar-plugin-calendar
-                        title = LLL:EXT:eventcalendar/Resources/Private/Language/locallang_db.xlf:tx_eventcalendar_calendar.name
-                        description = LLL:EXT:eventcalendar/Resources/Private/Language/locallang_db.xlf:tx_eventcalendar_calendar.description
-                        tt_content_defValues {
-                            CType = list
-                            list_type = eventcalendar_calendar
-                        }
-                    }
-                }
-                show = *
-            }
-       }'
-    );
-		$iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
-		
-			$iconRegistry->registerIcon(
-				'eventcalendar-plugin-calendar',
-				\TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-				['source' => 'EXT:eventcalendar/Resources/Public/Icons/user_plugin_calendar.svg']
-			);
-		
+        // wizards
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('@import \'EXT:eventcalendar/Configuration/TSConfig/\'');
+
+        $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+        $iconRegistry->registerIcon(
+            'eventcalendar-plugin-calendar',
+            \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+            ['source' => 'EXT:eventcalendar/Resources/Public/Icons/user_plugin_calendar.svg']
+        );
     }
 );
