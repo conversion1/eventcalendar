@@ -1,8 +1,8 @@
 {
-  "name": "cv_kickstart",
+  "name": "eventcalendar",
   "version": "0.0.1",
   "description": "Website base",
-  "main": "MainApplication.js",
+  "main": "",
   "scripts": {
     "build": "webpack --config Configuration/Webpack/Webpack.Prod.js",
     "dev": "webpack-dev-server --open --config Configuration/Webpack/Webpack.Dev.js --mode development"
