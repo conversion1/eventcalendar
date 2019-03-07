@@ -6,7 +6,7 @@
 
 <script lang="ts">
 
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Prop } from "vue-property-decorator";
 import Modernizr from "modernizr";
 
 import MonthlyCalendar from './Components/MonthlyCalendar';
@@ -18,9 +18,11 @@ import MonthlyCalendar from './Components/MonthlyCalendar';
 })
 export default class EventCalendar extends Vue {
 
-    public constructor() {
-        super();
-        this.isTouch = Modernizr.touchevents;
+	protected isTouch:boolean = false;
+	@Prop(String) readonly apiUrl!: string;
+
+    created() {
+		this.isTouch = Modernizr.touchevents;
     }
 
 }

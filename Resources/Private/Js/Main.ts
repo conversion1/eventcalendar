@@ -5,6 +5,9 @@ import EventCalendar from "./EventCalendar.vue";
 
 Vue.config.productionTip = false;
 
-const eventCalendar = new EventCalendar({
-    el: '#eventCalendar'
+const eventCalendar = new Vue({
+    el: '#eventCalendar',
+    components: {
+        'event-calendar': EventCalendar
+    }
 });
