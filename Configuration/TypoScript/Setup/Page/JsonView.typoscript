@@ -1,0 +1,28 @@
+jsonView = PAGE
+jsonView {
+	config {
+		disableAllHeaderCode = 1
+		debug = 0
+		no_cache = 1
+		additionalHeaders {
+			10 {
+				header = Content-Type: application/json
+				replace = 1
+			}
+		}
+	}
+	typeNum = 9980
+	10 = USER_INT
+	10 {
+		userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+		extensionName = Eventcalendar
+		pluginName = Calendar
+		vendorName = Conversion
+		controller = Api
+		switchableControllerActions {
+			Api {
+				1 = get
+			}
+		}
+	}
+}

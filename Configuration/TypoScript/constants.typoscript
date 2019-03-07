@@ -10,6 +10,6 @@ plugin.tx_eventcalendar_calendar {
     }
     persistence {
         # cat=plugin.tx_eventcalendar_calendar//a; type=string; label=Default storage PID
-        storagePid =
+        storagePid = 3
     }
 }

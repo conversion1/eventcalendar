@@ -9,11 +9,13 @@ call_user_func(
             'Conversion.Eventcalendar',
             'Calendar',
             [
-                'Event' => 'list, show'
+                'Event' => 'list, show',
+                'Api' => 'get'
             ],
             // non-cacheable actions
             [
-                'Event' => ''
+                'Event' => '',
+                'Api' => ''
             ]
         );
 
