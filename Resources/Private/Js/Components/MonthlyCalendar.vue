@@ -1,43 +1,37 @@
 <template>
-	<div>
+	<div class="o-monthly-calendar">
 		<h1>{{this.currentMonth.format('MMMM YYYY')}}</h1>
-
-		<div class="o-monthly-calendar">
-			<div class="o-monthly-calendar__row o-monthly-calendar__row--head">
-				<div class="o-monthly-calendar__cell">
-					<span class="o-monthly-calendar__cell__day">Mo</span>
-				</div>
-				<div class="o-monthly-calendar__cell">
-					<span class="o-monthly-calendar__cell__day">Di</span>
-				</div>
-				<div class="o-monthly-calendar__cell">
-					<span class="o-monthly-calendar__cell__day">Mi</span>
-				</div>
-				<div class="o-monthly-calendar__cell">
-					<span class="o-monthly-calendar__cell__day">Do</span>
-				</div>
-				<div class="o-monthly-calendar__cell">
-					<span class="o-monthly-calendar__cell__day">Fr</span>
-				</div>
-				<div class="o-monthly-calendar__cell">
-					<span class="o-monthly-calendar__cell__day">Sa</span>
-				</div>
-				<div class="o-monthly-calendar__cell">
-					<span class="o-monthly-calendar__cell__day">So</span>
-				</div>
+		<div class="o-monthly-calendar__row o-monthly-calendar__row--head">
+			<div class="o-monthly-calendar__cell">
+				<span class="o-monthly-calendar__cell__day">Mo</span>
 			</div>
-			<div class="o-monthly-calendar__row o-monthly-calendar__row"
-			     v-for="calendarWeek in this.calendarWeeks">
-				<div class="o-monthly-calendar__cell"
-				     v-for="calendarDay in calendarWeek.days">
-					<span class="o-monthly-calendar__cell__day">{{calendarDay.date.format('DD')}}</span>
-				</div>
+			<div class="o-monthly-calendar__cell">
+				<span class="o-monthly-calendar__cell__day">Di</span>
 			</div>
-
+			<div class="o-monthly-calendar__cell">
+				<span class="o-monthly-calendar__cell__day">Mi</span>
+			</div>
+			<div class="o-monthly-calendar__cell">
+				<span class="o-monthly-calendar__cell__day">Do</span>
+			</div>
+			<div class="o-monthly-calendar__cell">
+				<span class="o-monthly-calendar__cell__day">Fr</span>
+			</div>
+			<div class="o-monthly-calendar__cell">
+				<span class="o-monthly-calendar__cell__day">Sa</span>
+			</div>
+			<div class="o-monthly-calendar__cell">
+				<span class="o-monthly-calendar__cell__day">So</span>
+			</div>
 		</div>
-
-
-
+		<div class="o-monthly-calendar__row o-monthly-calendar__row"
+		     v-for="calendarWeek in this.calendarWeeks">
+			<div class="o-monthly-calendar__cell"
+			     v-for="calendarDay in calendarWeek.days">
+					<span class="o-monthly-calendar__cell__day"
+					      v-bind:class="{ 'o-monthly-calendar__cell__day--soft': calendarDay.isNotThisMonth }">{{calendarDay.date.format('DD')}}</span>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -61,9 +55,8 @@ export default class MonthlyCalendar extends Vue {
 	protected offsetDaysBefore: CalendarDay[] = [];
 	protected offsetDaysAfter: CalendarDay[] = [];
 
-	public constructor() {
-		super();
-		let monthNumber: number = 0;
+	created() {
+		let monthNumber: number = moment().month();
 		moment.locale('de');
 		this.currentYear = parseInt(moment().year(2019).format('YYYY'));
 		this.currentMonth = moment().month(monthNumber).year(this.currentYear);

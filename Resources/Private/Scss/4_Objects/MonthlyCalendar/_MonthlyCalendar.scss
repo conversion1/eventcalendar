@@ -1,5 +1,5 @@
 .o-monthly-calendar {
-	width: 600px;
+	width: 900px;
 }
 .o-monthly-calendar__row {
 	display: flex;
@@ -32,6 +32,10 @@
 	padding: 6px 4px;
 	border-bottom: solid 1px gray;
 	position: relative;
+}
+
+.o-monthly-calendar__cell__day--soft {
+	opacity: .2;
 }
 
 .o-monthly-calendar__row--head {
