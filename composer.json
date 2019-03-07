@@ -10,7 +10,8 @@
     ],
     "version": "1.0.0",
     "require": {
-        "typo3/cms-core": "^9.5"
+        "typo3/cms-core": "^9.5",
+        "helhum/dotenv-connector": "^2.1"
     },
     "autoload": {
         "psr-4": {
@@ -25,5 +26,10 @@
     "replace": {
         "eventcalendar": "self.version",
         "typo3-ter/eventcalendar": "self.version"
+    },
+    "extra": {
+        "helhum/dotenv-connector": {
+            "env-file": ".env"
+        }
     }
 }
