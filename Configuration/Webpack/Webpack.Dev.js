@@ -8,7 +8,8 @@ module.exports = merge(common, {
 	devServer: {
 		contentBase: './dist',
 		host: "192.168.100.46",
-		port: 8099
+		port: 8099,
+		disableHostCheck: true
 	},
 	performance: {
 		hints: 'warning'
