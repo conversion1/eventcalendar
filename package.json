@@ -10,7 +10,9 @@
   "author": "Mikel Wohlschlegel",
   "license": "ISC",
   "devDependencies": {
+    "@types/lodash": "^4.14.122",
     "@types/modernizr": "^3.5.3",
+    "@types/moment": "^2.13.0",
     "@types/vue": "^2.0.0",
     "@vue/cli-plugin-babel": "^3.4.1",
     "@vue/cli-plugin-typescript": "^3.4.1",
@@ -45,7 +47,9 @@
     "webpack-shell-plugin": "^0.5.0"
   },
   "dependencies": {
+    "lodash": "^4.17.11",
     "modernizr": "^3.7.0",
+    "moment": "^2.24.0",
     "vue": "^2.6.7",
     "vue-template-compiler": "^2.6.7"
   }

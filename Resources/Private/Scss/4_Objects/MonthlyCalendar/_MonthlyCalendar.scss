@@ -1,0 +1,67 @@
+.o-monthly-calendar {
+	width: 600px;
+}
+.o-monthly-calendar__row {
+	display: flex;
+	flex-flow: row nowrap;
+	flex-basis: 100%;
+	margin-left: -4px;
+	margin-right: -4px;
+
+}
+.o-monthly-calendar__cell {
+	flex: 0 0 (100% / 7);
+	width: (100% / 7);
+	padding: 12px 4px;
+}
+
+.o-monthly-calendar__row {
+	.o-monthly-calendar__cell {
+		&:nth-child(6), &:nth-child(7) {
+			.o-monthly-calendar__cell__day {
+				border-bottom: solid 2px black;
+			}
+		}
+	}
+}
+
+.o-monthly-calendar__cell__day {
+	display: block;
+	text-align: left;
+	margin-right: 30%;
+	padding: 6px 4px;
+	border-bottom: solid 1px gray;
+	position: relative;
+}
+
+.o-monthly-calendar__row--head {
+	.o-monthly-calendar__cell__day {
+		font-weight: bold;
+		text-transform: uppercase;
+		border-bottom: solid 3px black;
+	}
+}
+
+.o-monthly-calendar__cell__day--has-entry {
+	&:after {
+		position: absolute;
+		content: '';
+		bottom: 0;
+		left: 0;
+		width: 20px;
+		height: 1px;
+		border-bottom: solid 3px red;
+	}
+}
+
+.o-monthly-calendar__cell__day__dot {
+	width: 4px;
+	height: 4px;
+	background: red;
+	border-radius: 50%;
+	display: inline-block;
+	content: '';
+	position: absolute;
+	right: 10px;
+	bottom: 10px;
+}

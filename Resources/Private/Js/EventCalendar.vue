@@ -1,14 +1,25 @@
+<template>
+	<div>
+		<monthly-calendar></monthly-calendar>
+	</div>
+</template>
+
 <script lang="ts">
 
 import { Component, Vue } from "vue-property-decorator";
 import Modernizr from "modernizr";
 
-@Component
+import MonthlyCalendar from './Components/MonthlyCalendar';
+
+@Component({
+	components: {
+		'monthly-calendar': MonthlyCalendar
+	}
+})
 export default class EventCalendar extends Vue {
 
     public constructor() {
         super();
-        console.log("CONSTRUCT");
         this.isTouch = Modernizr.touchevents;
     }
 
