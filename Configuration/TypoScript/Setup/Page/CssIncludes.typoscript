@@ -1,0 +1,7 @@
+page {
+	includeCSS.eventcalendar = EXT:eventcalendar/Resources/Public/Css/dist/event-calendar.css
+}
+
+[applicationContext = Development/EventsDev]
+	page.includeCSS.eventcalendar >
+[end]

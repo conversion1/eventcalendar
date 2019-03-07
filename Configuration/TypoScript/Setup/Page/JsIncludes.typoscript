@@ -1,0 +1,15 @@
+page {
+	includeJSFooter.eventcalendar-vendor = EXT:eventcalendar/Resources/Public/Js/dist/event-calendar.vendor.build.js
+	includeJSFooter.eventcalendar-main = EXT:eventcalendar/Resources/Public/Js/dist/event-calendar.build.js
+}
+
+[applicationContext = Development/EventsDev]
+
+[end]
+
+page.includeJSFooter.eventcalendar-vendor >
+page.includeJSFooter.eventcalendar-vendor = http://192.168.100.46:8099/event-calendar.vendor.build.js
+page.includeJSFooter.eventcalendar-vendor.external = 1
+page.includeJSFooter.eventcalendar-main >
+page.includeJSFooter.eventcalendar-main = http://192.168.100.46:8099/event-calendar.build.js
+page.includeJSFooter.eventcalendar-main.external = 1
