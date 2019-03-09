@@ -11,3 +11,13 @@ export interface CalendarWeek {
 	number: number;
 	days?: CalendarDay[];
 }
+
+export interface Event {
+	uid: number;
+	pid: number;
+	title: string;
+	dateTimeStart: number;
+	dateTimeEnd: number;
+	start: Moment;
+	end: Moment;
+}
