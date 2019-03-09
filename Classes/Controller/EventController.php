@@ -33,8 +33,8 @@ class EventController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function listAction()
     {
-        $events = $this->eventRepository->findAll();
-        $this->view->assign('events', $events);
+        $events = $this->flattenEvents($this->eventRepository->findAll());
+        $this->view->assign('events', json_encode($events));
     }
 
     /**
@@ -46,5 +46,25 @@ class EventController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function showAction(\Conversion\Eventcalendar\Domain\Model\Event $event)
     {
         $this->view->assign('event', $event);
+    }
+
+    /**
+     * @param $events
+     * @return array
+     */
+    protected function flattenEvents($events) {
+        $eventObjects = [];
+        /** @var \Conversion\Eventcalendar\Domain\Model\Event $event */
+        foreach ($events as $event) {
+            $eventObject = [
+                'uid' => $event->getUid(),
+                'title' => $event->getTitle(),
+                'pid' => $event->getPid(),
+                'dateTimeStart' => $event->getDateTimeStart()->getTimestamp(),
+                'dateTimeEnd' => $event->getDateTimeEnd()->getTimestamp()
+            ];
+            $eventObjects[] = $eventObject;
+        }
+        return $eventObjects;
     }
 }

@@ -1,5 +1,5 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 	<div id="eventCalendar">
-		<event-calendar api-url="{f:uri.action(action:'get', controller: 'Api', pageType:9980, absolute: 1)}"></event-calendar>
+		<event-calendar v-bind:events="{events}" api-url="{f:uri.action(action:'get', controller: 'Api', pageType:9980, absolute: 1)}"></event-calendar>
 	</div>
 </html>

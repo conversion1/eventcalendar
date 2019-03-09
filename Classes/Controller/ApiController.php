@@ -39,20 +39,4 @@ class ApiController extends EventController
         return $this->view->render();
     }
 
-    protected function flattenEvents($events) {
-        $eventObjects = [];
-        /** @var \Conversion\Eventcalendar\Domain\Model\Event $event */
-        foreach ($events as $event) {
-            $eventObject = [
-                'uid' => $event->getUid(),
-                'title' => $event->getTitle(),
-                'pid' => $event->getPid(),
-                'dateTimeStart' => $event->getDateTimeStart()->getTimestamp(),
-                'dateTimeEnd' => $event->getDateTimeEnd()->getTimestamp()
-            ];
-            $eventObjects[] = $eventObject;
-        }
-        return $eventObjects;
-    }
-
 }
