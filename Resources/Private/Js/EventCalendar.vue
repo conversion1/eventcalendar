@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<monthly-calendar></monthly-calendar>
+		<monthly-calendar :month="month"></monthly-calendar>
 	</div>
 </template>
 
@@ -24,15 +24,17 @@ export default class EventCalendar extends Vue {
 	protected isTouch:boolean = false;
 	@Prop(String) readonly apiUrl!: string;
 	@Prop(Array) events: EventItem[];
+	protected month: Moment;
 
     created() {
 		this.isTouch = Modernizr.touchevents;
+		this.month = moment();
 		this.events.forEach((event: EventItem) => {
 			event.start = moment.unix(event.dateTimeStart);
 			event.end = moment.unix(event.dateTimeEnd);
 		});
 		this.$store.commit('setEvents', this.events);
-		console.log(this.$store.getters.events(moment().startOf('month'), moment().endOf('month')));
+		// console.log(this.$store.getters.events(moment().startOf('month'), moment().endOf('month')));
     }
 
 }

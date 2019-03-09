@@ -1,6 +1,6 @@
 <template>
 	<div class="o-monthly-calendar">
-		<h1>{{this.currentMonth.format('MMMM YYYY')}}</h1>
+		<h1>{{this.month.format('MMMM YYYY')}}</h1>
 		<div class="o-monthly-calendar__row o-monthly-calendar__row--head">
 			<div class="o-monthly-calendar__cell">
 				<span class="o-monthly-calendar__cell__day">Mo</span>
@@ -37,7 +37,7 @@
 
 <script lang="ts">
 
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Prop } from "vue-property-decorator";
 import * as _ from "lodash";
 import {Moment} from 'moment';
 import * as moment from 'moment';
@@ -46,8 +46,9 @@ import {CalendarDay, CalendarWeek} from "../Interfaces";
 @Component
 export default class MonthlyCalendar extends Vue {
 
-	protected currentMonth: Moment;
-	protected currentYear: number;
+	@Prop(Object) month?: Moment;
+
+	protected year: number;
 	protected calendarDays: CalendarDay[] = [];
 	protected calendarWeeks: CalendarWeek[] = [];
 	protected monthBefore: Moment;
@@ -57,24 +58,27 @@ export default class MonthlyCalendar extends Vue {
 
 	created() {
 		let monthNumber: number = moment().month();
+		if (!this.month) {
+			this.month = moment();
+		}
 		moment.locale('de');
-		this.currentYear = parseInt(moment().year(2019).format('YYYY'));
-		this.currentMonth = moment().month(monthNumber).year(this.currentYear);
-		this.calendarDays = this.getDaysOfMonth(this.currentMonth);
-		this.monthBefore = moment().month(monthNumber).year(this.currentYear).subtract(1, 'month');
-		this.monthAfter = moment().month(monthNumber).year(this.currentYear).add(1, 'month');
-		this.offsetDaysBefore = this.getOffsetDaysBefore(this.currentMonth, this.monthBefore);
-		this.offsetDaysAfter = this.getOffsetDaysAfter(this.currentMonth, this.monthAfter);
+		this.year = this.month.year();
+		this.calendarDays = this.getDaysOfMonth(this.month);
+		this.monthBefore = moment().month(monthNumber).year(this.year).subtract(1, 'month');
+		this.monthAfter = moment().month(monthNumber).year(this.year).add(1, 'month');
+		this.offsetDaysBefore = this.getOffsetDaysBefore(this.month, this.monthBefore);
+		this.offsetDaysAfter = this.getOffsetDaysAfter(this.month, this.monthAfter);
 		this.calendarDays = this.offsetDaysBefore.concat(this.calendarDays);
 		this.calendarDays = this.calendarDays.concat(this.offsetDaysAfter);
 		this.calendarWeeks = this.mapDaysToWeeks(this.calendarDays);
+		console.log(this.$store);
 	}
 
-	protected getDaysOfMonth(currentMonth: Moment): CalendarDay[] {
+	protected getDaysOfMonth(month: Moment): CalendarDay[] {
 		let days: CalendarDay[] = [];
 		let i: number = 1;
-		while (i <= currentMonth.daysInMonth()) {
-			let date: Moment = moment().date(i).month(parseInt(currentMonth.format('M') - 1)).year(currentMonth.year());
+		while (i <= month.daysInMonth()) {
+			let date: Moment = moment().date(i).month(parseInt(month.format('M') - 1)).year(month.year());
 			let day: CalendarDay = this.createCalendarDay(date);
 			days.push(day);
 			i++;
@@ -98,30 +102,30 @@ export default class MonthlyCalendar extends Vue {
 		return weeks;
 	}
 
-	protected getOffsetDaysBefore(currentMonth: Moment, monthBefore: Moment) {
+	protected getOffsetDaysBefore(month: Moment, monthBefore: Moment) {
 		let days: CalendarDay[] = [];
-		let offset: number = currentMonth.startOf('month').day() - 1;
+		let offset: number = month.startOf('month').day() - 1;
 		let totalDays: number = monthBefore.daysInMonth();
 		let dayStart: number = totalDays - offset + 1;
 		while (dayStart <= totalDays) {
 			let date: Moment = moment().date(dayStart).month(parseInt(monthBefore.format('M') - 1)).year(monthBefore.year());
 			let day: CalendarDay = this.createCalendarDay(date);
 			day.isNotThisMonth = true;
-			day.week = currentMonth.startOf('month').week();
+			day.week = month.startOf('month').week();
 			days.push(day);
 			dayStart++;
 		}
 		return days;
 	}
 
-	protected getOffsetDaysAfter(currentMonth: Moment, monthAfter: Moment) {
+	protected getOffsetDaysAfter(month: Moment, monthAfter: Moment) {
 		let days: CalendarDay[] = [];
-		let offset: number = currentMonth.endOf('month').day() - 1;
+		let offset: number = month.endOf('month').day() - 1;
 		let dayStart: number = 1;
 		while (dayStart <= offset) {
 			let date: Moment = moment().date(dayStart).month(parseInt(monthAfter.format('M') - 1)).year(monthAfter.year());
 			let day: CalendarDay = this.createCalendarDay(date);
-			day.week = currentMonth.endOf('month').week();
+			day.week = month.endOf('month').week();
 			day.isNotThisMonth = true;
 			days.push(day);
 			dayStart++;
