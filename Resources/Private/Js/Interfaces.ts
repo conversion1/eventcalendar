@@ -12,7 +12,7 @@ export interface CalendarWeek {
 	days?: CalendarDay[];
 }
 
-export interface Event {
+export interface EventItem {
 	uid: number;
 	pid: number;
 	title: string;

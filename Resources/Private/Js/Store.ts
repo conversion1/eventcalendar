@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-
+import {Moment} from "moment";
+import {EventItem} from "@/Interfaces";
 Vue.use(Vuex);
-// https://egghead.io/lessons
 export default new Vuex.Store({
 	state: {
 		events: []
@@ -18,9 +18,16 @@ export default new Vuex.Store({
 	actions: {
 	},
 	getters: {
-		events(state: any): Event[] {
-			console.log(typeof state);
-			return state.events;
+		events: (state) => (start?: Moment, end?: Moment) =>{
+			if (start && start.isValid() && end && end.isValid()) {
+				return state.events.filter( (event: EventItem) => {
+					if (event.start.isSameOrAfter(start) && event.end.isSameOrBefore(end)) {
+						return event;
+					}
+				})
+			} else {
+				return state.events;
+			}
 		}
 	}
 });
