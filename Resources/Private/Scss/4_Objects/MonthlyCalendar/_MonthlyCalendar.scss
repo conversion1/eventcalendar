@@ -34,6 +34,14 @@
 	position: relative;
 }
 
+.o-monthly-calendar__cell__day--mark {
+	color: red;
+}
+
+.o-monthly-calendar__cell__day--multiday {
+	color: yellow;
+}
+
 .o-monthly-calendar__cell__day--soft {
 	opacity: .2;
 }

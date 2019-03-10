@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import * as moment from 'moment';
 import {Moment} from "moment";
 import {EventItem} from "@/Interfaces";
 Vue.use(Vuex);
@@ -18,8 +19,10 @@ export default new Vuex.Store({
 	actions: {
 	},
 	getters: {
-		events: (state) => (start?: Moment, end?: Moment) =>{
-			if (start && start.isValid() && end && end.isValid()) {
+		events: (state) => (month?: Moment) =>{
+			if (month && month.isValid()) {
+				let start: Moment = month.clone().startOf('month');
+				let end: Moment = month.clone().endOf('month');
 				return state.events.filter( (event: EventItem) => {
 					if (event.start.isSameOrAfter(start) && event.end.isSameOrBefore(end)) {
 						return event;

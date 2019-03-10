@@ -5,6 +5,8 @@ export interface CalendarDay {
 	display: string;
 	week?: number;
 	isNotThisMonth?: boolean;
+	hasEvents?: boolean;
+	days?: number;
 }
 
 export interface CalendarWeek {
@@ -18,6 +20,16 @@ export interface EventItem {
 	title: string;
 	dateTimeStart: number;
 	dateTimeEnd: number;
+	start: Moment;
+	end: Moment;
+}
+
+export interface DateMark {
+	start: Moment;
+	days?: number;
+}
+
+export interface CalenderDate {
 	start: Moment;
 	end: Moment;
 }

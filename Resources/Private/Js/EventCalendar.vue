@@ -1,6 +1,7 @@
 <template>
 	<div>
-		<monthly-calendar :month="month"></monthly-calendar>
+		<monthly-calendar :current-month="activeMonth"
+		                  :dates="dates"></monthly-calendar>
 	</div>
 </template>
 
@@ -10,7 +11,7 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 import Modernizr from "modernizr";
 
 import MonthlyCalendar from './Components/MonthlyCalendar';
-import { EventItem } from "./Interfaces";
+import {CalendarDay, CalenderDate, EventItem} from "./Interfaces";
 import {Moment} from 'moment';
 import * as moment from 'moment';
 
@@ -24,17 +25,30 @@ export default class EventCalendar extends Vue {
 	protected isTouch:boolean = false;
 	@Prop(String) readonly apiUrl!: string;
 	@Prop(Array) events: EventItem[];
-	protected month: Moment;
+	protected activeMonth: Moment;
+	protected monthEvents: EventItem[] = [];
+	protected dates: CalenderDate[] = [];
 
     created() {
+		moment.locale('de');
 		this.isTouch = Modernizr.touchevents;
-		this.month = moment();
+		this.activeMonth = moment();
 		this.events.forEach((event: EventItem) => {
 			event.start = moment.unix(event.dateTimeStart);
 			event.end = moment.unix(event.dateTimeEnd);
 		});
 		this.$store.commit('setEvents', this.events);
-		// console.log(this.$store.getters.events(moment().startOf('month'), moment().endOf('month')));
+		this.monthEvents = this.$store.getters.events(this.activeMonth);
+
+		this.dates = [];
+		this.monthEvents.forEach((event: EventItem) => {
+			this.dates.push({
+				start: event.start,
+				end: event.end
+			});
+		});
+
+
     }
 
 }

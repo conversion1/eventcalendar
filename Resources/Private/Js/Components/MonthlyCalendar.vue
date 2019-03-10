@@ -29,7 +29,15 @@
 			<div class="o-monthly-calendar__cell"
 			     v-for="calendarDay in calendarWeek.days">
 					<span class="o-monthly-calendar__cell__day"
-					      v-bind:class="{ 'o-monthly-calendar__cell__day--soft': calendarDay.isNotThisMonth }">{{calendarDay.date.format('DD')}}</span>
+					      v-bind:class="{
+					        'o-monthly-calendar__cell__day--soft': calendarDay.isNotThisMonth,
+					        'o-monthly-calendar__cell__day--mark': calendarDay.hasEvents
+					      }">
+						{{calendarDay.date.format('DD')}}
+						<span v-if="calendarDay.days">
+							[+ {{calendarDay.days}}]
+						</span>
+					</span>
 			</div>
 		</div>
 	</div>
@@ -41,27 +49,32 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 import * as _ from "lodash";
 import {Moment} from 'moment';
 import * as moment from 'moment';
-import {CalendarDay, CalendarWeek} from "../Interfaces";
+import {CalendarDay, CalendarWeek, CalenderDate, DateMark} from "../Interfaces";
 
 @Component
 export default class MonthlyCalendar extends Vue {
 
-	@Prop(Object) month?: Moment;
+	@Prop(Object) readonly currentMonth?: Moment;
+	@Prop(Array) readonly dates: CalenderDate[];
 
 	protected year: number;
+	protected month: Moment;
 	protected calendarDays: CalendarDay[] = [];
 	protected calendarWeeks: CalendarWeek[] = [];
 	protected monthBefore: Moment;
 	protected monthAfter: Moment;
 	protected offsetDaysBefore: CalendarDay[] = [];
 	protected offsetDaysAfter: CalendarDay[] = [];
+	protected dateMarks: DateMark[] = [];
 
 	created() {
+		// moment.locale('de');
 		let monthNumber: number = moment().month();
-		if (!this.month) {
+		if (!this.currentMonth) {
 			this.month = moment();
+		} else {
+			this.month = this.currentMonth;
 		}
-		moment.locale('de');
 		this.year = this.month.year();
 		this.calendarDays = this.getDaysOfMonth(this.month);
 		this.monthBefore = moment().month(monthNumber).year(this.year).subtract(1, 'month');
@@ -71,7 +84,40 @@ export default class MonthlyCalendar extends Vue {
 		this.calendarDays = this.offsetDaysBefore.concat(this.calendarDays);
 		this.calendarDays = this.calendarDays.concat(this.offsetDaysAfter);
 		this.calendarWeeks = this.mapDaysToWeeks(this.calendarDays);
-		console.log(this.$store);
+		this.dateMarks = this.datesToDateMarks(this.dates);
+		this.calendarDays = this.markDaysInCalendar(this.dateMarks);
+	}
+
+	protected markDaysInCalendar(dateMarks: DateMark[]) {
+		this.calendarDays.forEach((calendarDay: CalendarDay) => {
+			dateMarks.forEach((dateMark: DateMark) => {
+				if (calendarDay.date.isSame(dateMark.start, 'day')) {
+					calendarDay.hasEvents = true;
+					if (dateMark.days) {
+						calendarDay.days = dateMark.days;
+					}
+				}
+			});
+		});
+		return this.calendarDays;
+	}
+
+	protected datesToDateMarks(dates: CalenderDate[]) {
+		let dateMarks: DateMark[] = [];
+		dates.forEach((date: CalenderDate) => {
+			if (date.start.day() !== date.end.day()) {
+				dateMarks.push({
+					start: date.start,
+					days: date.end.startOf('day').diff(date.start.startOf('day'), 'days')
+				})
+			} else {
+				dateMarks.push({
+					start: date.start
+				})
+			}
+		});
+		console.log(dateMarks);
+		return dateMarks;
 	}
 
 	protected getDaysOfMonth(month: Moment): CalendarDay[] {
