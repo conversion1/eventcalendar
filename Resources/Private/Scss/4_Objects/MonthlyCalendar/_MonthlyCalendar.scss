@@ -1,5 +1,6 @@
 .o-monthly-calendar {
 	width: 900px;
+	color: $color-1;
 }
 .o-monthly-calendar__row {
 	display: flex;
@@ -15,31 +16,19 @@
 	padding: 12px 4px;
 }
 
-.o-monthly-calendar__row {
-	.o-monthly-calendar__cell {
-		&:nth-child(6), &:nth-child(7) {
-			.o-monthly-calendar__cell__day {
-				border-bottom: solid 2px black;
-			}
-		}
-	}
-}
-
 .o-monthly-calendar__cell__day {
 	display: block;
 	text-align: left;
 	margin-right: 30%;
 	padding: 6px 4px;
-	border-bottom: solid 1px gray;
+	border-bottom: solid 1px $color-3;
 	position: relative;
 }
 
 .o-monthly-calendar__cell__day--mark {
-	color: red;
-}
-
-.o-monthly-calendar__cell__day--multiday {
-	color: yellow;
+	color: $color-5;
+	border-bottom: solid 3px $color-5;
+	font-weight: bold;
 }
 
 .o-monthly-calendar__cell__day--soft {
@@ -50,7 +39,7 @@
 	.o-monthly-calendar__cell__day {
 		font-weight: bold;
 		text-transform: uppercase;
-		border-bottom: solid 3px black;
+		border-bottom: solid 3px $color-1;
 	}
 }
 
@@ -62,18 +51,18 @@
 		left: 0;
 		width: 20px;
 		height: 1px;
-		border-bottom: solid 3px red;
+		border-bottom: solid 3px $color-5;
 	}
 }
 
-.o-monthly-calendar__cell__day__dot {
-	width: 4px;
-	height: 4px;
-	background: red;
+.o-monthly-calendar__cell__day__event-icon {
+	width: 8px;
+	height: 8px;
+	background: $color-5;
 	border-radius: 50%;
 	display: inline-block;
 	content: '';
 	position: absolute;
 	right: 10px;
-	bottom: 10px;
+	bottom: 14px;
 }

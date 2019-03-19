@@ -34,9 +34,8 @@
 					        'o-monthly-calendar__cell__day--mark': calendarDay.hasEvents
 					      }">
 						{{calendarDay.date.format('DD')}}
-						<span v-if="calendarDay.days">
-							[+ {{calendarDay.days}}]
-						</span>
+						<span v-if="calendarDay.hasEvents"
+						      class="o-monthly-calendar__cell__day__event-icon"></span>
 					</span>
 			</div>
 		</div>
